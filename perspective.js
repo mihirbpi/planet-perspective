@@ -1,10 +1,12 @@
 t = 0;
 delta_t = 0.06;
 
+// Sun
 x_sun = 0;
 y_sun = 0;
 r_sun = 20;
 
+// Earth
 r_earth = 30;
 r_sun_earth = 100;
 x_earth = 0;
@@ -13,24 +15,14 @@ v_earth = 1;
 v_earth_spin = 365;
 latitude = 34;
 
-r_mars = 30;
-r_sun_mars = 1.504 * r_sun_earth;
-x_mars = 0;
-y_mars = 0;
-z_mars = 0;
-v_mars = v_earth / 1.88;
-v_mars_spin = v_earth_spin / 1.02749;
-mars_orbit_inclin = 1.81 * (Math.PI/180);
-mars_orbit_normal = 0;
-mars_major_axis = 0;
-mars_minor_axis = 0;
-
+// Moon
 r_moon = 10;
 r_earth_moon = 0.002676 * r_sun_earth;
 x_moon = 0;
 y_moon = 0;
 v_moon = 12;
 
+// Venus
 r_venus = 30;
 r_sun_venus = 0.7238 * r_sun_earth;
 x_venus = 0;
@@ -43,6 +35,20 @@ venus_orbit_normal = 0;
 venus_major_axis = 0;
 venus_minor_axis = 0;
 
+// Mars
+r_mars = 30;
+r_sun_mars = 1.504 * r_sun_earth;
+x_mars = 0;
+y_mars = 0;
+z_mars = 0;
+v_mars = v_earth / 1.88;
+v_mars_spin = v_earth_spin / 1.02749;
+mars_orbit_inclin = 1.81 * (Math.PI/180);
+mars_orbit_normal = 0;
+mars_major_axis = 0;
+mars_minor_axis = 0;
+
+// Jupiter
 r_jupiter = 30;
 r_sun_jupiter = 5.209 * r_sun_earth;
 x_jupiter = 0;
@@ -57,24 +63,24 @@ jupiter_minor_axis = 0;
 
 function setup() {
 
-  /* Setup the animation */
+/* Setup the animation */
   createCanvas(window.innerWidth, window.innerHeight);
   colorMode(RGB);
   textSize(15);
   translate(width / 2, height / 2);
   scale(1, -1);
 
-//Setup Mars
+// Setup Mars
   mars_orbit_normal = new Vector(0, cos((Math.PI/2)-mars_orbit_inclin), sin((Math.PI/2)-mars_orbit_inclin));
   mars_major_axis = new Vector(0, sin((Math.PI/2)-mars_orbit_inclin), -cos((Math.PI/2)-mars_orbit_inclin));
   mars_minor_axis = mars_orbit_normal.cross(mars_major_axis);
 
-//Setup Venus
+// Setup Venus
   venus_orbit_normal = new Vector(0, cos((Math.PI/2)-venus_orbit_inclin), sin((Math.PI/2)-venus_orbit_inclin));
   venus_major_axis = new Vector(0, sin((Math.PI/2)-venus_orbit_inclin), -cos((Math.PI/2)-venus_orbit_inclin));
   venus_minor_axis = venus_orbit_normal.cross(venus_major_axis);
 
-//Setup Jupiter
+// Setup Jupiter
   jupiter_orbit_normal = new Vector(0, cos((Math.PI/2)-jupiter_orbit_inclin), sin((Math.PI/2)-jupiter_orbit_inclin));
   jupiter_major_axis = new Vector(0, sin((Math.PI/2)-jupiter_orbit_inclin), -cos((Math.PI/2)-jupiter_orbit_inclin));
   jupiter_minor_axis = jupiter_orbit_normal.cross(jupiter_major_axis);
@@ -83,20 +89,20 @@ function setup() {
 
 function draw() {
 
-  /* The draw loop which is called continuously */
+/* The draw loop which is called continuously */
   translate(width / 2, height / 2);
   scale(1, -1);
   background(0);
 
-//Earth position
+// Earth position
   x_earth = x_sun + r_sun_earth * cos(v_earth * t);
   y_earth = y_sun + r_sun_earth * sin(v_earth * t);
 
-//Moon position
+// Moon position
   x_moon = x_earth + r_earth_moon * cos(v_moon * t);
   y_moon = y_earth + r_earth_moon * sin(v_moon * t);
 
-//Mars position
+// Mars position
   x_mars = x_sun + r_sun_mars * cos(v_mars * t);
   y_mars = y_sun + r_sun_mars * sin(v_mars * t);
   //vec_mars = new Vector(r_sun_mars * cos(v_mars * t) * mars_major_axis.x + r_sun_mars * sin(v_mars * t) * mars_minor_axis.x, r_sun_mars * cos(v_mars * t) * mars_major_axis.y + r_sun_mars * sin(v_mars * t) * mars_minor_axis.y, r_sun_mars * cos(v_mars * t) * mars_major_axis.z + r_sun_mars * sin(v_mars * t) * mars_minor_axis.z);
@@ -104,7 +110,7 @@ function draw() {
   //z_mars = 10 * vec_mars.z;
   z_mars = 10 * vec_mars_z;
 
-//Venus Postion
+// Venus Postion
   x_venus = x_sun + r_sun_venus * cos(v_venus * t);
   y_venus = y_sun + r_sun_venus * sin(v_venus * t);
   //vec_venus = new Vector(r_sun_venus * cos(v_venus * t) * venus_major_axis.x + r_sun_venus * sin(v_venus * t) * venus_minor_axis.x, r_sun_venus * cos(v_venus * t) * venus_major_axis.y + r_sun_venus * sin(v_venus * t) * venus_minor_axis.y, r_sun_venus * cos(v_venus * t) * venus_major_axis.z + r_sun_venus * sin(v_venus * t) * venus_minor_axis.z);
@@ -112,7 +118,7 @@ function draw() {
   //z_venus = 10 * vec_venus.z;
   z_venus = 10 * vec_venus_z;
 
-//Jupiter Postion
+// Jupiter Postion
   x_jupiter = x_sun + r_sun_jupiter * cos(v_jupiter * t);
   y_jupiter = y_sun + r_sun_jupiter * sin(v_jupiter * t);
   //vec_jupiter = new Vector(r_sun_jupiter * cos(v_jupiter * t) * jupiter_major_axis.x + r_sun_jupiter * sin(v_jupiter * t) * jupiter_minor_axis.x, r_sun_jupiter * cos(v_jupiter * t) * jupiter_major_axis.y + r_sun_jupiter * sin(v_jupiter * t) * jupiter_minor_axis.y, r_sun_jupiter * cos(v_jupiter * t) * jupiter_major_axis.z + r_sun_jupiter * sin(v_jupiter * t) * jupiter_minor_axis.z);
@@ -126,7 +132,6 @@ function draw() {
   //console.log( ((calcNoonSunAngle(fraction, latitude) + latitude - 90)/23.5 ) * (height/2));
   //y_eclip = -23.5*cos(2*Math.PI*fraction/100);
 
-/*
   v_1 = new Vector(0, 1, 0);
   v_1 = new Vector(cos(Math.PI/3), sin(Math.PI/3));
   v_1 = new Vector(cos(v_earth_spin * t), sin(v_earth_spin * t));
@@ -211,7 +216,7 @@ function draw() {
 }
 
 class Vector {
-  /* custom Vector class */
+/* custom Vector class */
   constructor(x, y, z){
     this.x = x;
     this.y = y;
@@ -220,7 +225,7 @@ class Vector {
   }
 
   dot(V){
-    return this.x * mars_minor_axis.x + this.y * V.y + this.z * V.z;
+    return this.x * V.x + this.y * V.y + this.z * V.z;
   }
 
   cross(V){
@@ -229,6 +234,7 @@ class Vector {
 
 }
 
+/*
 function calcNoonSunAngle(fr, latitude) {
   if (0 <= fr && fr <= 50) {
     var f = (float(23.5 * fr) / 25) - 23.5;
@@ -242,3 +248,4 @@ function calcNoonSunAngle(fr, latitude) {
 
   return null;
 }
+*/
